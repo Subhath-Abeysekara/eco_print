@@ -5,4 +5,4 @@ def format_doc(document):
     return document
 
 def format_docs(documents):
-    return list(map(lambda document: change_id(document), documents))
+    return list(map(lambda document: format_doc(document), documents))

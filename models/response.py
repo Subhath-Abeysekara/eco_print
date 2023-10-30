@@ -19,8 +19,7 @@ class Response:
     def generate(self):
         return {
             'statusCode': self.status_code,
-            'headers': RESPONSE_HEADERS,
-            'body': json.dumps(self.body)
+            'body': self.body
         }
 
 class SuccessResponse(Response):

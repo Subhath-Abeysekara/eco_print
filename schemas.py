@@ -7,7 +7,6 @@ class User(Schema):
     email = fields.Str(required=True)
     occupation = fields.Str(required=True)
     password = fields.Str(required=True)
-    confirm_password = fields.Str(required=True)
 
 class Login(Schema):
     email = fields.Str(required=True)

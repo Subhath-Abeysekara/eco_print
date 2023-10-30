@@ -1,7 +1,6 @@
 from flask import Flask,request, jsonify
 from flask_cors import CORS , cross_origin
-
-from Image import hide_image, get_all_images, unhide_image
+from Image import hide_image, get_all_images, unhide_image, get_unhidden_images
 from PredictionModel import predict_and_display_features
 from User import register_user , login_user
 from authentication import validate_token
@@ -24,12 +23,13 @@ def home():
 @app.route("/v1/register" , methods=["POST"])
 @cross_origin()
 def register():
-    return register_user(request.json())
+    print(request.json)
+    return register_user(request.json)
 
 @app.route("/v1/login" , methods=["POST"])
 @cross_origin()
 def login():
-    return login_user(request.json())
+    return login_user(request.json)
 
 @app.route("/v1/upload", methods=["POST"])
 @cross_origin()
@@ -37,8 +37,8 @@ def image_upload():
     print("main")
     id = validate_token(request=request)
     uploaded_file = request.files['image']
-    latitude = request.files['latitude']
-    longitude = request.files['longitude']
+    latitude = request.form['latitude']
+    longitude = request.form['longitude']
     if uploaded_file:
         uploaded_file.save('uploaded.png')
         prediction = predict_and_display_features()
@@ -48,13 +48,12 @@ def image_upload():
 @app.route("/v1/undefinedimage", methods=["POST"])
 @cross_origin()
 def image_upload_undefined():
-    print("main")
     id = validate_token(request=request)
     uploaded_file = request.files['image']
-    latitude = request.files['latitude']
-    longitude = request.files['longitude']
-    plant_name = request.files['plant_name']
-    plant_week = request.files['plant_week']
+    latitude = request.form['latitude']
+    longitude = request.form['longitude']
+    plant_name = request.form['plant_name']
+    plant_week = request.form['plant_week']
     if uploaded_file:
         uploaded_file.save('uploaded.png')
         upload_undefined(id=id,longitude=longitude,latitude=latitude,plant_name=plant_name,plant_week=plant_week)
@@ -64,7 +63,7 @@ def image_upload_undefined():
 
 @app.route("/v1/hide/<image_id>", methods=["PUT"])
 @cross_origin()
-def hide_image(image_id):
+def hideimage(image_id):
     id = validate_token(request=request)
     return hide_image(image_id=image_id,id=id)
 
@@ -72,6 +71,7 @@ def hide_image(image_id):
 @cross_origin()
 def unhideimage(image_id):
     id = validate_token(request=request)
+    print(id)
     return unhide_image(image_id=image_id,id=id)
 
 @app.route("/v1/images")
@@ -80,17 +80,19 @@ def get_images():
     id = validate_token(request=request)
     return get_all_images()
 
-@app.route("/v1/user/hidden_images")
+@app.route("/v1/user/unhidden_images")
 @cross_origin()
-def get_hidden_images():
+def get_unhiddenimages():
     id = validate_token(request=request)
-    return get_hidden_images(id=id)
+    print(id)
+    return get_unhidden_images(id=id)
 
 @app.route("/v1/instructions")
 @cross_origin()
 def get_instructions():
     id = validate_token(request=request)
     return get_instruction()
+
 
 if __name__ == '__main__':
     app.debug = True

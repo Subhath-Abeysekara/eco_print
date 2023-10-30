@@ -1,6 +1,7 @@
 from bson import ObjectId
 from common import format_docs
 from models.response import ErrorResponse, SuccessResponse
+from mongo_save_image import format_image_docs
 from service import connect_images
 
 collection = connect_images()
@@ -38,19 +39,22 @@ def unhide_image(image_id,id):
 def get_all_images():
     try:
         images = collection.find({'hidden_state':False})
+        images_ = format_image_docs(images)
         response = {
-            "images" :format_docs(images)
+            "images" :format_docs(images_)
         }
         return SuccessResponse(response).generate()
     except:
         raise Exception(
-            ErrorResponse(15,str("error id")))
+            ErrorResponse(15,str("error")))
 
-def get_hidden_images(id):
+def get_unhidden_images(id):
     try:
+        print(id)
         images = collection.find({'hidden_state':False,'user_id':id})
+        images_ = format_image_docs(images)
         response = {
-            "images" :format_docs(images)
+            "images": format_docs(images_)
         }
         return SuccessResponse(response).generate()
     except:

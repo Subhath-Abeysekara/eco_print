@@ -37,7 +37,7 @@ def display_image_features(img):
     for ax in axs.ravel():
         ax.axis('off')
     plt.tight_layout()
-    plt.show()
+    # plt.show()
 
 def predict_and_display_features():
     # Load and preprocess the image

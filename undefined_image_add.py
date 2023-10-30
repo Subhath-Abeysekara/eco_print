@@ -1,13 +1,13 @@
 from service import connect_undefined
+from upload_images import upload_image_to_firebase
+
 collection = connect_undefined()
 
 def upload_undefined(id , latitude, longitude , plant_name , plant_week):
     image_path = 'uploaded.png'
-    with open(image_path, 'rb') as f:
-        image_data = f.read()
     image_doc = {
         'user_id': id,
-        'data': image_data,
+        'data': upload_image_to_firebase(image_file=image_path),
         'hidden_state':False,
         'plant_week':plant_week,
         'plant_name':plant_name,

@@ -23,11 +23,11 @@ def register_user(user):
 def login_user(user):
     schema = Login(many=False)
     validate_inputs(body=user, schema=schema)
-    user = collection.find({'email':user['email'],'password':user['password']})
-    if list(user) == []:
+    user = collection.find_one({'email':user['email'],'password':user['password']})
+    if user is None:
         raise Exception(
             ErrorResponse(ResponseCode.NOT_REGISTER, ResponseMessage.NOT_REGISTER + str("errors")))
-    token = generate_token_user(id=str(user[0]['_id']),email= user['email'] ,password= user['password'] ,time_due= 8600)
+    token = generate_token_user(id=str(user['_id']),email= user['email'] ,password= user['password'] ,time_due= 8600)
     response = {
         "token" : token
     }
