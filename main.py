@@ -7,6 +7,7 @@ from PredictionModel import predict_and_display_features
 from User import register_user , login_user
 from authentication import validate_token
 from disease_detect import predict_disease
+from get_samples import get_two_samples
 from instructions import get_instruction
 from mongo_save_image import upload_image
 from undefined_image_add import upload_undefined
@@ -47,7 +48,9 @@ def image_upload():
         prediction = predict_and_display_features()
         video_urls = env.WEEKS[prediction['Week']:]
         upload_image(id=id , prediction=prediction,longitude=longitude,latitude=latitude)
+        com_images = get_two_samples(prediction)
         prediction['videos'] = video_urls
+        prediction['sample_images'] = com_images
         return prediction
 
 @app.route("/v1/disease", methods=["POST"])

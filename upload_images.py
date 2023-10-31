@@ -26,6 +26,14 @@ def get_sign_url_firebase(file_name):
     signed_url = blob.generate_signed_url(version='v4',expiration=expiration_date)
     return signed_url
 
+def get_sign_url_firebase_sample(file_name):
+    bucket = storage.bucket('meetingdetecting.appspot.com')
+    destination_blob_name = f'eco_print/plants/{file_name}'
+    blob = bucket.blob(destination_blob_name)
+    expiration_date = 604000  # Set the expiration time (e.g., 1 hour)
+    signed_url = blob.generate_signed_url(version='v4',expiration=expiration_date)
+    return signed_url
+
 def download_from_firebase(filename):
     # Get a reference to the Firebase Storage bucket
     bucket = storage.bucket('meetingdetecting.appspot.com')
