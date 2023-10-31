@@ -31,5 +31,5 @@ def download_from_firebase(filename):
     bucket = storage.bucket('meetingdetecting.appspot.com')
     destination_blob_name = f'eco_print/{filename}'
     blob = bucket.blob(destination_blob_name)
-    blob.download_to_filename("model.h5")
+    blob.download_to_filename(filename=filename)
     return
