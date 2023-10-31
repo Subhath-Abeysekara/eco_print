@@ -1,3 +1,4 @@
+import env
 from service import connect_images , connect_finetune
 from upload_images import upload_image_to_firebase, get_sign_url_firebase
 
@@ -28,7 +29,7 @@ def upload_image(id , prediction , latitude, longitude):
         'hidden_state':False,
         'prediction':prediction,
         'latitude': latitude,
-        'longitude': longitude
+        'longitude': longitude,
     }
     collection.insert_one(image_doc)
     del image_doc['user_id']

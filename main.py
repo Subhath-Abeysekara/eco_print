@@ -1,5 +1,7 @@
 from flask import Flask,request, jsonify
 from flask_cors import CORS , cross_origin
+
+import env
 from Image import hide_image, get_all_images, unhide_image, get_unhidden_images
 from PredictionModel import predict_and_display_features
 from User import register_user , login_user
@@ -42,7 +44,9 @@ def image_upload():
     if uploaded_file:
         uploaded_file.save('uploaded.png')
         prediction = predict_and_display_features()
+        video_urls = env.WEEKS[prediction['Week']:]
         upload_image(id=id , prediction=prediction,longitude=longitude,latitude=latitude)
+        prediction['videos'] = video_urls
         return prediction
 
 @app.route("/v1/undefinedimage", methods=["POST"])
