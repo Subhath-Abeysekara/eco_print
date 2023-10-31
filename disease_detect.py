@@ -45,7 +45,7 @@ class_name= ['Apple___Apple_scab',
  'Tomato___healthy']
 # Provide the path to the image you want to predict
 try:
-    download_from_firebase()
+    download_from_firebase('model.h5')
     print("model_downloaded")
 except:
     print("download error")

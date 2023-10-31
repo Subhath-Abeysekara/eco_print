@@ -3,6 +3,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 from keras.models import load_model
 
+from upload_images import download_from_firebase
+
+try:
+    download_from_firebase('plant_type_and_week_model.h5')
+    print("model_downloaded")
+except:
+    print("download error")
 # Load the trained model
 model = load_model('plant_type_and_week_model.h5')
 plant_categories = ['Eggplant', 'Penaga_Laut', 'Terminalia_Catappa', 'Plant Unknown']
