@@ -6,6 +6,7 @@ from Image import hide_image, get_all_images, unhide_image, get_unhidden_images
 from PredictionModel import predict_and_display_features
 from User import register_user , login_user
 from authentication import validate_token
+from disease_detect import predict_disease
 from instructions import get_instruction
 from mongo_save_image import upload_image
 from undefined_image_add import upload_undefined
@@ -47,6 +48,17 @@ def image_upload():
         video_urls = env.WEEKS[prediction['Week']:]
         upload_image(id=id , prediction=prediction,longitude=longitude,latitude=latitude)
         prediction['videos'] = video_urls
+        return prediction
+
+@app.route("/v1/disease", methods=["POST"])
+@cross_origin()
+def detect_disease():
+    print("main")
+    id = validate_token(request=request)
+    uploaded_file = request.files['image']
+    if uploaded_file:
+        uploaded_file.save('uploaded.png')
+        prediction = predict_disease()
         return prediction
 
 @app.route("/v1/undefinedimage", methods=["POST"])

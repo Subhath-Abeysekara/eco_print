@@ -26,6 +26,10 @@ def get_sign_url_firebase(file_name):
     signed_url = blob.generate_signed_url(version='v4',expiration=expiration_date)
     return signed_url
 
-# image_file = "D:/Download - copy/22-09-2023/Screenshot 2023-09-14 001255.png"
-# image_url = upload_image_to_firebase(image_file=image_file)
-# print(image_url)
+def download_from_firebase():
+    # Get a reference to the Firebase Storage bucket
+    bucket = storage.bucket('meetingdetecting.appspot.com')
+    destination_blob_name = f'eco_print/model.h5'
+    blob = bucket.blob(destination_blob_name)
+    blob.download_to_filename("model.h5")
+    return
