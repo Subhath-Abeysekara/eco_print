@@ -1,6 +1,5 @@
 from service import connect_undefined
 from upload_images import upload_image_to_firebase
-
 collection = connect_undefined()
 
 def upload_undefined(id , latitude, longitude , plant_name , plant_week):
